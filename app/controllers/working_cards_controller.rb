@@ -7,10 +7,12 @@ CHARACTER_LIST = [
 ]
 class WorkingCardsController < ApplicationController
   # before_action :set_working_card, only: [:show, :edit, :update, :destroy]
+  skip_before_action :verify_authenticity_token
 
   # GET /working_cards
   # GET /working_cards.json
   def index
+    @status = WorkingCard.all.group(:name).count
     @working_cards = WorkingCard.all
   end
 
@@ -29,9 +31,10 @@ class WorkingCardsController < ApplicationController
   def create
     # @working_card = WorkingCard.new(working_card_params)
     character = params['post']['character']
+    puts character.underscore
     quantity = params['post']['quantity'].to_i
     quantity.times do |i|
-      card = WorkingCard.new(:name => params["post"]['character'])
+      card = WorkingCard.new(:name => character,:codeName => character.underscore)
       card.save
     end
 
@@ -50,7 +53,15 @@ class WorkingCardsController < ApplicationController
     end
   end
 
-  def deawOne
+  def drawOne
+    character = WorkingCard.all.sample
+    if character = nil then
+      render json: { }
+    else
+      characterName = character.name
+      character.destroy
+      render json: { character: characterName }
+    end
   end
   private
     # Use callbacks to share common setup or constraints between actions.
