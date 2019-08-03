@@ -1,0 +1,2 @@
+class WorkingCard < ApplicationRecord
+end
