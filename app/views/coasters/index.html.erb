@@ -51,7 +51,18 @@
           $("#prize-image").attr('src','');
           $("#gacha-result").addClass('hidden');
           $(".prize-img").addClass('hidden');
-      })
+      });
+
+      $("#toggle-list-btn").on('click',function(){
+        $("#toggle-icon").toggleClass("fa-caret-up");
+        $("#toggle-icon").toggleClass("fa-caret-down");
+        if($("#product-list").hasClass('show')){
+          //change text to hide
+          $("#toggle-text").html("Show ");
+        } else {
+          $("#toggle-text").html("Hide ");
+        }
+      });
     });
 </script>
 <div class='drawing-page'>
@@ -76,10 +87,14 @@
   </div>
   <hr/>
   <div class='container-fluid'>
+    <div class='row justify-content-center text-center'>
+      <a href="#product-list" data-toggle="collapse" id='toggle-list-btn'><span id='toggle-text'>Show </span>List<i id='toggle-icon' class="fa fa-caret-down"></i></a>
+    </div>
     <div class='row justify-content-center'>
       <div class='btn-section col-md-4 text-center'>
-        <!-- <button type="button" id="sample-button" class='btn btn-md btn-primary'>sample</button> -->
-        <%= image_tag '/assets/coaster/coaster_sample.jpg', class: "rounded img-fluid img  mx-auto d-block" %>
+        <div id="product-list" class="collapse">
+          <%= image_tag '/assets/coaster/coaster_sample.jpg', class: "rounded img-fluid img  mx-auto d-block" %>
+        </div>
       </div>
     </div>
   </div>

@@ -2,50 +2,52 @@
 
 <%= link_to 'New Coaster', new_coaster_path ,:class => 'btn btn-lg btn-primary'%>
 
-<h2> Coaster </h2>
-<table class='table table-hover'>
-  <thead class='thead-dark'>
-    <tr>
-      <th>id</th>
-      <th>Name</th>
-      <th>Status</th>
-      <th>Sold Time</th>
-    </tr>
-  </thead>
-
-  <tbody class=''>
-    <% @coasters.try(:each) do |coaster| %>
+<h2 data-toggle="collapse" href="#collapseCoaster" role="button"> Coaster </h2>
+<div class="collapse show" id="collapseCoaster">
+  <table class='table table-hover'>
+    <thead class='thead-dark'>
       <tr>
-        <td><%= coaster.id %></td>
-        <td><%= coaster.name %></td>
-        <td><%= coaster.sold %></td>
-        <td><%= (coaster.soldTime!=nil ? coaster.soldTime.in_time_zone(-7) : ' ')%></td>
+        <th>id</th>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Sold Time</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody class=''>
+      <% @coasters.try(:each) do |coaster| %>
+        <tr>
+          <td><%= coaster.id %></td>
+          <td><%= coaster.name %></td>
+          <td><%= coaster.sold %></td>
+          <td><%= (coaster.soldTime!=nil ? coaster.soldTime.in_time_zone(-7) : ' ')%></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
-<h2> Staff Card </h2>
-<table class='table table-hover'>
-  <thead class='thead-dark'>
-    <tr>
-      <th>id</th>
-      <th>Name</th>
-      <th>Status</th>
-      <th>Sold Time</th>
-    </tr>
-  </thead>
-
-  <tbody class=''>
-    <% @working_cards.try(:each) do |working_card| %>
+<h2 data-toggle="collapse" href="#collapseStaff" role="button"> Staff Card </h2>
+<div class="collapse show" id="collapseStaff">
+  <table class='table table-hover'>
+    <thead class='thead-dark'>
       <tr>
-        <td><%= working_card.id %></td>
-        <td><%= working_card.name %></td>
-        <td><%= working_card.sold %></td>
-        <td><%= (working_card.soldTime!=nil ? working_card.soldTime.in_time_zone(-7) : ' ')%></td>
+        <th>id</th>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Sold Time</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody class=''>
+      <% @working_cards.try(:each) do |working_card| %>
+        <tr>
+          <td><%= working_card.id %></td>
+          <td><%= working_card.name %></td>
+          <td><%= working_card.sold %></td>
+          <td><%= (working_card.soldTime!=nil ? working_card.soldTime.in_time_zone(-7) : ' ')%></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
 <%= link_to 'Back', root_path , :class => 'btn btn-lg btn-danger'%>
