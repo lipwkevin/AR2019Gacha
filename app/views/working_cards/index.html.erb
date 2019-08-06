@@ -3,18 +3,23 @@
   function startShuffle(){
     random_character = CHARACTER_LIST[Math.floor((Math.random()*CHARACTER_LIST.length))];
     console.log(random_character)
+    $(".prize-img").addClass('hidden');
     $('#character-name').html(random_character);
+    $("[id='"+random_character+"']").removeClass('hidden');
+
   };
   function setCharacter(data){
+    $(".prize-img").addClass('hidden');
     $('#character-name').html(data.character);
     newQuantity = $("#"+data.code).children().eq(1).text() *1 -1;
     $("#"+data.code).children().eq(1).text(newQuantity);
+    window.alert("Congratulate, Your Prize is: "+data.code);
+    $("[id='"+data.character+"']").removeClass('hidden');
   };
 
   $( document ).ready(function() {
-      console.log( "ready!" );
       $("#gacha-button").on('click',function() {
-        $("#gacha-result").removeClass('hidden')
+        $("#gacha-result").removeClass('hidden');
         var timer = setInterval(startShuffle,500);
         $.ajax({
             type: "POST",
@@ -25,13 +30,14 @@
             },
             success: function(data){
                 if(_.isEmpty(data)){
-                  clearInterval(timer)
+                  clearInterval(timer);
                   $("#gacha-result").addClass('hidden')
+                  $(".prize-img").addClass('hidden');
                   window.alert("NOTHING LEFT");
                 } else {
                   setTimeout(function(){
-                    clearInterval(timer)
-                    setCharacter(data)
+                    clearInterval(timer);
+                    setCharacter(data);
                     window.alert("Congratulate, Your Prize is: "+data.code);
                   }, 5000);
                 }
@@ -43,20 +49,23 @@
       });
 
       $("#reset-button").on('click',function() {
-          $("#gacha-result").addClass('hidden')
-          console.log('clear')
+          $("#prize-image").attr('src','');
+          $("#gacha-result").addClass('hidden');
+          $(".prize-img").addClass('hidden');
       })
     });
 </script>
 <div>
   <p id="notice"><%= notice %></p>
 
-  <h1 class='text-center'>Working Cards</h1>
+  <h1 class='text-center'>BangDream! Staff Card</h1>
 
   <hr/>
   <div class='container-fluid'>
-    <div id='gacha-result' class='hidden'>
-      <img src='' class='prize-image' />
+    <div id='gacha-result' class=''>
+      <% @characters.try(:each) do |character| %>
+        <%= image_tag '/assets/coaster/'+character.gsub(/\s/, '_')+'.png' , title: character, class: "prize-img rounded img-fluid img hidden mx-auto d-block", data: {},id: character %>
+      <% end %>
       <p id='character-name' class='character-name text-center'></p>
     </div>
     <div class='row justify-content-center'>
@@ -70,7 +79,8 @@
   <div class='container-fluid'>
     <div class='row justify-content-center'>
       <div class='btn-section col-md-4 text-center'>
-        <button type="button" id="sample-button" class='btn btn-md btn-primary'>sample</button>
+        <!-- <button type="button" id="sample-button" class='btn btn-md btn-primary'>sample</button> -->
+        <%= image_tag '/assets/staff/staff_sample.jpg', class: "rounded img-fluid img  mx-auto d-block" %>
       </div>
     </div>
   </div>
@@ -92,8 +102,5 @@
         <% end %>
       </tbody>
     </table>
-  </div>
-  <div class='hidden pre-load-image'>
-    <img src='' />
   </div>
 </div>
