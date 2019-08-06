@@ -46,6 +46,14 @@
 }
 
 .drawing-page{
+  .btn-back{
+    font-size: 34px;
+    position: absolute;
+    top: 5px;
+    color: #337ab7;
+    left: 15px;
+    padding-left: 15px;
+  }
   .section-border{
     width: 50vh;
     border: 1px solid #ccc!important;
