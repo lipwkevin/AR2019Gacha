@@ -54,13 +54,13 @@
       })
     });
 </script>
-<div>
+<div class='drawing-page'>
   <p id="notice"><%= notice %></p>
 
   <h1 class='text-center'>BangDream! Coasters</h1>
 
   <hr/>
-  <div class='container-fluid'>
+  <div class='container-fluid section-border'>
     <div id='gacha-result' class=''>
       <% @characters.try(:each) do |character| %>
         <%= image_tag '/assets/coaster/'+character.gsub(/\s/, '_')+'.png' , title: character, class: "prize-img rounded img-fluid img hidden mx-auto d-block", data: {},id: character %>
