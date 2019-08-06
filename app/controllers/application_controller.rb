@@ -3,7 +3,6 @@ class ApplicationController < ActionController::Base
   end
 
   def backend
-    debugger
     @coasters = Coaster.all
     @working_cards = WorkingCard.all
   end

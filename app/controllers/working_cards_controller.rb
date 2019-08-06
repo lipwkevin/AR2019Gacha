@@ -12,8 +12,13 @@ class WorkingCardsController < ApplicationController
   # GET /working_cards
   # GET /working_cards.json
   def index
-    @status = WorkingCard.all.group(:name).count
+    list = WorkingCard.distinct.pluck(:name)
+    @status = WorkingCard.where(sold:false).group(:name,).count
+    list.each do |character|
+      @status[character] = @status[character] ? (@status[character]) : 0
+    end
     @working_cards = WorkingCard.all
+    @characters = CHARACTER_LIST
   end
 
   # GET /working_cards/1
@@ -31,16 +36,14 @@ class WorkingCardsController < ApplicationController
   def create
     # @working_card = WorkingCard.new(working_card_params)
     character = params['post']['character']
-    puts character.underscore
+    code = character.split(' ')[1]
     quantity = params['post']['quantity'].to_i
     quantity.times do |i|
-      card = WorkingCard.new(:name => character,:codeName => character.underscore)
+      card = WorkingCard.new(:name => character,:codeName => code, :sold => false)
       card.save
     end
-
-    respond_to do |format|
-        format.html { render :new }
-    end
+    redirect_to backend_path
+    return
   end
 
   # DELETE /working_cards/1
@@ -54,15 +57,19 @@ class WorkingCardsController < ApplicationController
   end
 
   def drawOne
-    character = WorkingCard.all.sample
-    if character = nil then
+    character = WorkingCard.where(sold:false).sample
+    if character == nil then
       render json: { }
     else
+      code = character.codeName
       characterName = character.name
-      character.destroy
-      render json: { character: characterName }
+      character.sold = true
+      character.soldTime = Time.zone.now.in_time_zone('Pacific Time (US & Canada)')
+      character.save
+      render json: { character: characterName ,code:code }
     end
   end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_working_card
