@@ -1,5 +1,16 @@
 <h1>New Coaster</h1>
+<%= form_tag(coasters_path) do %>
+  <div class="field">
+    <%= label_tag 'name' %>
+    <%= select("post", "character", @characters.to_a, {}) %>
+  </div>
+  <div class="field">
+    <%= label_tag 'quantity' %>
+    <%= select("post", "quantity", (1..10).to_a, {}) %>
+  </div>
+  <div class="actions">
+    <%= submit_tag  %>
+  </div>
+<% end %>
 
-<%= render 'form', coaster: @coaster %>
-
-<%= link_to 'Back', coasters_path %>
+<%= link_to 'Back', backend_path , :class => 'btn btn-lg btn-danger'%>

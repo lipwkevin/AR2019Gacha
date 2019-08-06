@@ -1,9 +1,9 @@
 CHARACTER_LIST = [
-  'MINATO YUKINA',"IMAI LISA","HIKAWA SAYO","UDAGAWA AKO","SHIROKANE RINKO",
-  'TOYAMA KASUMI','HANAZONO TAE','USHIGOME RIMI','YAMABUKI SAYA','ICHIGAYA ARISA',
-  'MITAKE RAN','AOBA MOCA','UDAGAWA TOMOE','UEHARA HIMARI','HAZAWA TSUGUMI',
-  'MARUYAMA AYA','HIKAWA HINA','SHIRASAGI CHISATO','YAMATO MAYA','WAKAMIYA EVE',
-  'TSURUMAKI KOKORO','SETA KAORU','MATSUBARA KANON','KITAZAWA HAGUMI','OKUSAWA MISAKI',
+  'TOYAMA KASUMI','YAMABUKI SAYA','ICHIGAYA ARISA',
+  'MITAKE RAN','UDAGAWA TOMOE','HAZAWA TSUGUMI',
+  'MARUYAMA AYA','YAMATO MAYA','WAKAMIYA EVE',
+  'MINATO YUKINA',"UDAGAWA AKO","SHIROKANE RINKO",
+  'TSURUMAKI KOKORO','MATSUBARA KANON','OKUSAWA MISAKI',
 ]
 class WorkingCardsController < ApplicationController
   # before_action :set_working_card, only: [:show, :edit, :update, :destroy]
@@ -19,7 +19,6 @@ class WorkingCardsController < ApplicationController
     end
     @working_cards = WorkingCard.all
     @characters = CHARACTER_LIST
-    @prefix = 'coaster'
   end
 
   # GET /working_cards/1
