@@ -63,7 +63,7 @@
   <div class='container-fluid'>
     <div id='gacha-result' class=''>
       <% @characters.try(:each) do |character| %>
-        <%= image_tag '/assets/staff/'+character+'.png' , title: character, class: "prize-img rounded img-fluid img hidden mx-auto d-block", data: {},id: character %>
+        <%= image_tag '/assets/staff/'+character.gsub(/\s/, '_')+'.png' , title: character, class: "prize-img rounded img-fluid img hidden mx-auto d-block", data: {},id: character %>
       <% end %>
       <p id='character-name' class='character-name text-center'></p>
     </div>
