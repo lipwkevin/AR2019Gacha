@@ -11,18 +11,20 @@
   function setCharacter(data){
     $(".prize-img").addClass('hidden');
     $('#character-name').html(data.character);
-    newQuantity = $("#"+data.code).children().eq(1).text() *1 -1;
+    var newQuantity = $("#"+data.code).children().eq(1).text() *1 -1;
     $("#"+data.code).children().eq(1).text(newQuantity);
     $("[id='"+data.character+"']").removeClass('hidden');
     $("[id='prize-"+data.character+"']").removeClass('hidden');
     $('#prize-name').html(data.character);
     $('#prize-modal').modal('show')
+    var newItemRemain = $("#itemRemain").text() *1 -1;
+    $("#itemRemain").text(newItemRemain)
   };
 
   $( document ).ready(function() {
       $("#gacha-button").on('click',function() {
         $("#gacha-result").removeClass('hidden');
-        var timer = setInterval(startShuffle,500);
+        var timer = setInterval(startShuffle,200);
         $.ajax({
             type: "POST",
             url: '/coaster/draw/',
@@ -40,7 +42,7 @@
                   setTimeout(function(){
                     clearInterval(timer);
                     setCharacter(data);
-                  }, 5000);
+                  }, 3000);
                 }
             },
             error: function(xhr, status, err) {
@@ -87,6 +89,9 @@
       </div>
     </div>
   </div>
+  <div class='text-center'>
+    <h4>Remaining: <span id='itemRemain'><%= @coasters.count %></span></h4>
+  </div>
   <hr/>
   <div class='container-fluid'>
     <div class='row justify-content-center text-center'>
@@ -101,23 +106,26 @@
     </div>
   </div>
   <hr/>
-  <div class='status-table'>
-    <table class='table table-hover text-center'>
-      <thead class='thead-dark'>
-        <tr>
-          <th class=' text-center'>Name</th>
-          <th class=' text-center'>Remains</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @status.each do |character| %>
+  <div>
+    <a href="#status-table" data-toggle="collapse" id='toggle-list-btn'><span id='toggle-text'>Statistic </a>
+    <div id='status-table' class="collapse" data-toggle="collapse" >
+      <table class='table table-hover text-center'>
+        <thead class='thead-dark'>
+          <tr>
+            <th class=' text-center'>Name</th>
+            <th class=' text-center'>Remains</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @status.each do |character| %>
           <tr id='<%= character[0].split(' ')[1] %>'>
             <td><%= character[0] %></td>
             <td><%= character[1] %></td>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
 
   <div id="prize-modal" class="modal hide">
