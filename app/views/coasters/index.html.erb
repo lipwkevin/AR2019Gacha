@@ -16,14 +16,16 @@
     $("[id='"+data.character+"']").removeClass('hidden');
     $("[id='prize-"+data.character+"']").removeClass('hidden');
     $('#prize-name').html(data.character);
-    $('#prize-modal').modal('show')
+    $('#prize-modal').modal('show');
     var newItemRemain = $("#itemRemain").text() *1 -1;
-    $("#itemRemain").text(newItemRemain)
+    $("#itemRemain").text(newItemRemain);
+    $("#gacha-button").attr("disabled", false);
   };
 
   $( document ).ready(function() {
       $("#gacha-button").on('click',function() {
         $("#gacha-result").removeClass('hidden');
+        $("#gacha-button").attr("disabled", true);
         var timer = setInterval(startShuffle,200);
         $.ajax({
             type: "POST",
@@ -47,6 +49,7 @@
             },
             error: function(xhr, status, err) {
               window.alert("SORRY SOMETHING WENT WRONG");
+              $("#gacha-button").attr("disabled", false);
             }
         });
       });
